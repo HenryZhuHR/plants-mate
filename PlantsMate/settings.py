@@ -36,14 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mqtt_manager.apps.MqttManagerConfig',  # mqtt_manager: https://docs.djangoproject.com/zh-hans/4.1/intro/tutorial02/#activating-models
+    'plantcenter.apps.PlantcenterConfig',  # mqtt_manager: https://docs.djangoproject.com/zh-hans/4.1/intro/tutorial02/#activating-models
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware', # 关闭 CSRF 验证 https://www.jianshu.com/p/671deb51a968
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

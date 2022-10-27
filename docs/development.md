@@ -60,7 +60,7 @@ python3 manage.py runserver
 
 例如某设备的完整MAC地址为 `84:F7:03:39:9F:C8` ，采用 `39:9F:C8` 所构成的 `int` 类型(通常为4字节)的数字作为编号。十六进制 `39`:`9F`:`C8` 分别对应十进制 `57`:`159`:`200`，按字节位置由高到低移位相加
 ```c
-(57 << (sizeof(byte) * 2)) + (159 << (sizeof(byte))) + 200;
+746 = (57 << (sizeof(byte) * 2)) + (159 << (sizeof(byte))) + 200;
 ```
 就可以得到唯一的编号 `746`
 
@@ -79,4 +79,12 @@ python3 manage.py runserver
 python3 manage.py makemigrations <app_name> # 激活数据表
 python3 manage.py migrate   # 创建表结构
 ```
+
+
+
+
+
+## 接口设计
+
+### 请求
 

@@ -31,7 +31,7 @@ models.OneToOneField    一对一关联关系
 """
 
 
-class PlantsStatus(models.Model):
+class PlantStatus(models.Model):
     id = models.AutoField(primary_key=True)
     device = models.IntegerField(null=False)
     date = models.IntegerField(null=False)

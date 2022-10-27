@@ -19,5 +19,6 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mqtt_manager/',include('mqtt_manager.urls'))
+    # path('mqtt_manager/',include('mqtt_manager.urls')),
+    path('plantcenter/',include('plantcenter.urls')),
 ]
