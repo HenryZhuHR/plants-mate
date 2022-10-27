@@ -1,0 +1,17 @@
+
+# 监听端口
+listener 1885
+protocol mqtt
+
+# 持久化功能的开关
+persistence true
+# 持久化DB文件目录
+persistence_location /home/ubuntu/log/mosquitto
+
+# log_dest stderr
+log_dest  file /home/ubuntu/log/mosquitto/mosquitto.log
+
+# 是否允许匿名访问
+allow_anonymous false
+password_file /home/ubuntu/configs/mosquitto/pwfile.conf
+acl_file /home/ubuntu/configs/mosquitto/aclfile.conf
