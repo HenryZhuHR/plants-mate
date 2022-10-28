@@ -45,8 +45,10 @@ static void print_chip_init_info();
 
 void app_main(void)
 {
+
     int   i = 0;
-    char* now_time_srt[20];   // Time got
+    char* now_time_srt[20],date[20], time[20];   // Time got
+
     float light_percent = 0.; // 光百分比
 
     // dth11 传感器数据
@@ -66,7 +68,7 @@ void app_main(void)
 
     char mac_addr[18]     = {0};
     byte base_mac_addr[6] = {0}; // 84:F7:03:39:9F:C8
-    int  device        = 0;
+    int  device           = 0;
     ret                   = esp_efuse_mac_get_default(base_mac_addr); // 本机 Mac 地址
 
     device = (base_mac_addr[3] << (sizeof(byte) * 2)) + (base_mac_addr[4] << (sizeof(byte))) + base_mac_addr[5];
@@ -116,8 +118,10 @@ void app_main(void)
 
     cJSON_AddNumberToObject(cjson_info, "device", device);
     // cJSON_AddStringToObject(cjson_info, "time", "");
-    cJSON_AddNumberToObject(cjson_info, "date", 0);
-    cJSON_AddNumberToObject(cjson_info, "time", 0);
+
+    
+    cJSON_AddStringToObject(cjson_info, "date", "");
+    cJSON_AddStringToObject(cjson_info, "time", "");
     {
         cJSON_AddNumberToObject(cjson_data, "light", 0);
         cJSON_AddNumberToObject(cjson_data, "temperature", dth11_data.temperature);
@@ -131,19 +135,14 @@ void app_main(void)
         page = 0;
         ssd1306_clear_screen(&dev, false);
         struct tm now_time = get_now_time();
-
-        int date = (now_time.tm_year + 1900) * 10000 + (now_time.tm_mon + 1) * 100 + now_time.tm_mday;
-        int time = now_time.tm_hour * 10000 + now_time.tm_min * 100 + now_time.tm_sec;
-
-        cJSON_ReplaceItemInObject(cjson_info, "date", cJSON_CreateNumber(date));
-        cJSON_ReplaceItemInObject(cjson_info, "time", cJSON_CreateNumber(time));
-
+        strftime(date, sizeof(date), "%Y-%m-%d", &now_time);
+        strftime(time, sizeof(time), "%H:%M:%S", &now_time);
         strftime(now_time_srt, sizeof(now_time_srt), "%Y-%m-%d %H:%M:%S", &now_time);
-        strftime(display_str, sizeof(display_str), "%Y-%m-%d", &now_time);
-        ssd1306_display_text(&dev, page, display_str, strlen(display_str), false);
-        strftime(display_str, sizeof(display_str), "%H:%M:%S", &now_time);
+        cJSON_ReplaceItemInObject(cjson_info, "date", cJSON_CreateString(date));
+        cJSON_ReplaceItemInObject(cjson_info, "time", cJSON_CreateString(time));
+        ssd1306_display_text(&dev, page, display_str, strlen(date), false);
         page += 1;
-        ssd1306_display_text(&dev, page, display_str, strlen(display_str), false);
+        ssd1306_display_text(&dev, page, display_str, strlen(time), false);
 
 
         {
