@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -167,19 +168,44 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-hans'  # 'en-us'
 
 TIME_ZONE = 'Asia/Shanghai'  # 'UTC'
+DATETIME_FORMAT = "Y-m-d H:i:s" # https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date
+DATE_FORMAT = "Y-m-d" 
+TIME_FORMAT = "H:i:s"
+USE_THOUSAND_SEPARATOR = True
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, "assets"),
+ ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PROJECT_CONFIG = BASE_DIR / 'configs/settings.yaml'
+
+
+
+# Simple UI config  https://simpleui.72wo.com/docs/simpleui/
+SIMPLEUI_STATIC_OFFLINE = True # 离线模式
+SIMPLEUI_LOGO = 'https://s3.plumeta.com/i/2022/10/29/hhba5y.png'
+# 隐藏右侧SimpleUI广告链接和使用分析
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_HOME_QUICK = False
+SIMPLEUI_HOME_ACTION = False
+SIMPLEUI_ANALYSIS = False
+
+# SIMPLEUI_HOME_PAGE = 'https://www.baidu.com' # 可用于嵌入其他链接，这里可以直接方便的嵌入报表链接
+# SIMPLEUI_HOME_ICON = 'el el-icon-platform-eleme'
+# ICON 支持element-ui和fontawesome  eg：fa fa-user
+
+
+
+

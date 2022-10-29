@@ -1,4 +1,5 @@
 django
+django-simpleui
 pyyaml
 paho-mqtt   # mqtt client
 pymysql     # mysql: https://blog.csdn.net/weixin_43886133/article/details/102937338

@@ -33,13 +33,15 @@ models.OneToOneField    一对一关联关系
 
 class PlantStatus(models.Model):
     class Meta:
-        db_table = 'plantstatus'# 数据库中显示的表的名称
-    id = models.AutoField(primary_key=True)
-    device = models.IntegerField(null=False)
-    date = models.DateField(null=False)
-    time = models.TimeField(null=False)
-    # date=
-    light = models.FloatField(null=True)
-    temperature = models.FloatField(null=True)
-    humidity = models.FloatField(null=True)
+        db_table = 'plantstatus'    # 数据库中显示的表的名称
+        verbose_name = '植物状态'
+        verbose_name_plural = verbose_name
 
+    id = models.AutoField(primary_key=True)
+    device = models.IntegerField(verbose_name='设备编号',null=False)
+    date = models.DateField(verbose_name='日期',null=False)
+    time = models.TimeField(verbose_name='时间',null=False)
+    # date=
+    light = models.FloatField(verbose_name='光线',null=True)
+    temperature = models.FloatField(verbose_name='温度',null=True)
+    humidity = models.FloatField(verbose_name='湿度',null=True)
