@@ -20,7 +20,7 @@ def start_mqtt(config_file):
         try:
             json_message = json.loads(message.payload.decode())
         except:
-            print('error decode json', message.payload.decode())
+            logger.error('error decode json from MQTT: '+message.payload.decode())
         else:
             require_keys = ['device', 'date', 'time']
             if check_key(dict(json_message), require_keys):

@@ -32,11 +32,14 @@ models.OneToOneField    一对一关联关系
 
 
 class PlantStatus(models.Model):
+    class Meta:
+        db_table = 'plantstatus'# 数据库中显示的表的名称
     id = models.AutoField(primary_key=True)
     device = models.IntegerField(null=False)
-    date = models.IntegerField(null=False)
-    time = models.IntegerField(null=False)
+    date = models.DateField(null=False)
+    time = models.TimeField(null=False)
     # date=
     light = models.FloatField(null=True)
     temperature = models.FloatField(null=True)
     humidity = models.FloatField(null=True)
+

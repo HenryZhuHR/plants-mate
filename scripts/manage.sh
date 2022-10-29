@@ -1,4 +1,4 @@
-python3 manage.py makemigrations mqtt_manager # 激活数据表
+python3 manage.py makemigrations plantcenter # 激活数据表
 
 
 python3 manage.py migrate   # 创建表结构
