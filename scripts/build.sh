@@ -8,7 +8,7 @@ idf.py set-target esp32-c3 # 设置目标芯片
 # idf.py menuconfig   # 配置
 
 # idf.py \
-#     -p /dev/cu.usbserial-2120 \
+#     -p /dev/cu.usbserial-2130 \
 #     -b 460800 \
 #     flash
-idf.py -p /dev/cu.usbserial-2120 flash monitor
+idf.py -p /dev/cu.usbserial-2130 flash monitor

@@ -9,7 +9,7 @@ menu "SSD1306 Configuration"
 
 	choice INTERFACE
 		prompt "Interface"
-		default SPI_INTERFACE
+		default I2C_INTERFACE
 		help
 			Select Interface.
 		config I2C_INTERFACE
@@ -57,7 +57,7 @@ menu "SSD1306 Configuration"
 		default 22 if IDF_TARGET_ESP32
 		default 12 if IDF_TARGET_ESP32S2
 		default 12 if IDF_TARGET_ESP32S3
-		default  9 if IDF_TARGET_ESP32C3
+		default 10 if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to I2C SCL.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.
@@ -70,7 +70,7 @@ menu "SSD1306 Configuration"
 		default 21 if IDF_TARGET_ESP32
 		default 11 if IDF_TARGET_ESP32S2
 		default 11 if IDF_TARGET_ESP32S3
-		default 10 if IDF_TARGET_ESP32C3
+		default  8 if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to I2C SDA.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.

@@ -16,6 +16,9 @@
         "freertos.h": "c",
         "functional": "c",
         "*.inc": "c",
-        "timeouts.h": "c"
+        "timeouts.h": "c",
+        "font8x8_basic.h": "c",
+        "ssd1306.h": "c",
+        "spi_master.h": "c"
     }
 }

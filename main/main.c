@@ -47,7 +47,7 @@ void app_main(void)
 {
 
     int   i = 0;
-    char* now_time_srt[20],date[20], time[20];   // Time got
+    char *now_time_srt[20], date[20], time[20]; // Time got
 
     float light_percent = 0.; // 光百分比
 
@@ -95,31 +95,31 @@ void app_main(void)
                  base_mac_addr[3], base_mac_addr[4], base_mac_addr[5]);
     }
     {
-        ESP_LOGI(TAG, "INTERFACE is SPI");
-        ESP_LOGI(TAG, "CONFIG_MOSI_GPIO = %d", CONFIG_MOSI_GPIO);
-        ESP_LOGI(TAG, "CONFIG_SCLK_GPIO = %d", CONFIG_SCLK_GPIO);
-        ESP_LOGI(TAG, "CONFIG_CS_GPIO	= %d", CONFIG_CS_GPIO);
-        ESP_LOGI(TAG, "CONFIG_DC_GPIO	= %d", CONFIG_DC_GPIO);
-        ESP_LOGI(TAG, "CONFIG_RESET_GPIO= %d", CONFIG_RESET_GPIO);
-        spi_master_init(&dev, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO);
+        ESP_LOGI(TAG, "INTERFACE is i2c");
+        ESP_LOGI(TAG, "CONFIG_SDA_GPIO=%d", CONFIG_SDA_GPIO);
+        ESP_LOGI(TAG, "CONFIG_SCL_GPIO=%d", CONFIG_SCL_GPIO);
+        ESP_LOGI(TAG, "CONFIG_RESET_GPIO=%d", CONFIG_RESET_GPIO);
+        i2c_master_init(&dev, CONFIG_SDA_GPIO, CONFIG_SCL_GPIO, CONFIG_RESET_GPIO);
         ESP_LOGI(TAG, "Panel is 128x64");
         ssd1306_init(&dev, 128, 64);
         ssd1306_clear_screen(&dev, false);
-        // ssd1306_contrast(&dev, 0xff);
-        ssd1306_display_text_x3(&dev, 0, "Hello", 5, false);
+
+        ssd1306_display_text(&dev, 3, " Waiting for", strlen(" Waiting for"), false);
+        ssd1306_display_text(&dev, 4, " WiFi connection", strlen(" WiFi connection"), false);
     }
 
     app_init_adc();
 
-    ssd1306_clear_screen(&dev, false);
+    
     wifi_connect_sta();                                 // Init WiFi
     esp_mqtt_client_handle_t client = mqtt_app_start(); // MQTT client
+    
 
 
     cJSON_AddNumberToObject(cjson_info, "device", device);
     // cJSON_AddStringToObject(cjson_info, "time", "");
 
-    
+
     cJSON_AddStringToObject(cjson_info, "date", "");
     cJSON_AddStringToObject(cjson_info, "time", "");
     {
@@ -130,26 +130,39 @@ void app_main(void)
     }
 
 
+    int display_reflesh_count = 0;
+    ssd1306_clear_screen(&dev, false);
     while (1)
     {
         page = 0;
-        ssd1306_clear_screen(&dev, false);
+        if (display_reflesh_count == 20)
+        {
+            ssd1306_clear_screen(&dev, false);
+            display_reflesh_count = 0;
+        }
+        else
+        {
+            display_reflesh_count += 1;
+        }
         struct tm now_time = get_now_time();
         strftime(date, sizeof(date), "%Y-%m-%d", &now_time);
         strftime(time, sizeof(time), "%H:%M:%S", &now_time);
         strftime(now_time_srt, sizeof(now_time_srt), "%Y-%m-%d %H:%M:%S", &now_time);
         cJSON_ReplaceItemInObject(cjson_info, "date", cJSON_CreateString(date));
         cJSON_ReplaceItemInObject(cjson_info, "time", cJSON_CreateString(time));
-        ssd1306_display_text(&dev, page, display_str, strlen(date), false);
+
+        strftime(date, sizeof(date), " %Y-%m-%d", &now_time);
+        strftime(time, sizeof(time), " %H:%M:%S", &now_time);
+        ssd1306_display_text(&dev, page, date, strlen(date), false);
         page += 1;
-        ssd1306_display_text(&dev, page, display_str, strlen(time), false);
+        ssd1306_display_text(&dev, page, time, strlen(time), false);
 
 
         {
 
             light_percent = light_get_light() * 100;
             cJSON_ReplaceItemInObject(cjson_data, "light", cJSON_CreateNumber(light_percent));
-            snprintf(display_str, sizeof(display_str), "light %.2f %%", light_percent);
+            snprintf(display_str, sizeof(display_str), " light %.2f %%", light_percent);
             page += 2;
             ssd1306_display_text(&dev, page, display_str, strlen(display_str), false);
         }
@@ -159,10 +172,10 @@ void app_main(void)
             {
                 cJSON_ReplaceItemInObject(cjson_data, "temperature", cJSON_CreateNumber(dth11_data.temperature));
                 cJSON_ReplaceItemInObject(cjson_data, "humidity", cJSON_CreateNumber(dth11_data.humidity));
-                snprintf(display_str, sizeof(display_str), "temp  %.2f oC", dth11_data.temperature);
+                snprintf(display_str, sizeof(display_str), " temp  %.2f oC", dth11_data.temperature);
                 page += 2;
                 ssd1306_display_text(&dev, page, display_str, strlen(display_str), false);
-                snprintf(display_str, sizeof(display_str), "humi  %.2f %%", dth11_data.humidity);
+                snprintf(display_str, sizeof(display_str), " humi  %.2f %%", dth11_data.humidity);
                 page += 2;
                 ssd1306_display_text(&dev, page, display_str, strlen(display_str), false);
             }
