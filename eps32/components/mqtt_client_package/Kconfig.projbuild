@@ -1,0 +1,28 @@
+menu "Example Configuration"
+
+    config MQTT_BROKER_URL
+        string "mqtt Broker URL"
+        default "mqtt://henryzhuhr.xyz"
+
+    config MQTT_BROKER_PORT
+        int "mqtt Broker port"
+        default 1885
+    
+    config MQTT_CLIENT_USERNAME
+        string "mqtt client username"
+        default "plantsmate"
+
+    config MQTT_CLIENT_PASSEORD
+        string "mqtt client password"
+        default "20221018"
+
+    config MQTT_CLIENT_TOPIC
+        string "mqtt client topic"
+        default "plantsmate"
+        
+    config MQTT_CLIENT_QOS
+        int "mqtt client qos"
+        default 0
+
+
+endmenu
