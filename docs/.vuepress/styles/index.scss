@@ -1,0 +1,14 @@
+// tabel {
+//     width: 100%;
+// }
+
+thead {
+    background-color: var(--c-bg-light);
+    text-align: left;
+}
+
+// tbody tr:nth-child(odd),
+tbody tr:nth-child(even) {
+    background-color: var(--c-bg);
+
+}

@@ -1,0 +1,21 @@
+mqtt:
+  username: plantsmate
+  password: '20221018'
+  host: henryzhuhr.xyz
+  port: 1885
+  topic: 'plantsmate'
+
+database:
+  host: henryzhuhr.xyz
+  port: 27017
+  database: 'plantsmate'
+  collection:
+    - 'device'
+
+
+# database:
+#   host: 'henryzhuhr.xyz'
+#   port: 27017
+#   database: 'plantsmate'
+#     collection:
+#       - 'device'
