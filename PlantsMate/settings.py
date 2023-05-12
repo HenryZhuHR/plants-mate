@@ -37,14 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',# CORS 放在新建的其他项目之前
     'plantcenter.apps.PlantcenterConfig',  # mqtt_manager: https://docs.djangoproject.com/zh-hans/4.1/intro/tutorial02/#activating-models
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # CORS 注意顺序，必须放在这儿
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware', # 关闭 CSRF 验证 https://www.jianshu.com/p/671deb51a968
+    'django.middleware.csrf.CsrfViewMiddleware', # 关闭 CSRF 验证 https://www.jianshu.com/p/671deb51a968
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -177,9 +179,12 @@ USE_I18N = True
 
 USE_TZ = False
 
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+SIMPLEUI_STATIC_OFFLINE = True # 离线模式 https://simpleui.72wo.com/docs/simpleui/QUICK.html#离线模式
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
      os.path.join(BASE_DIR, "assets"),
@@ -209,3 +214,9 @@ SIMPLEUI_ANALYSIS = False
 
 
 
+
+# 跨域配置
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+#允许所有的请求头
+CORS_ALLOW_HEADERS = ('*')

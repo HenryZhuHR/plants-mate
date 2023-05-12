@@ -1,6 +1,0 @@
-{
-    "Error": {
-        "Code": 110,
-        "Message": "Missing Parameter. Please check parameter <device> if in your data"
-    }
-}

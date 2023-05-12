@@ -6,8 +6,9 @@ import requests
 
 import base64
 
-URL_BASE = 'http://localhost:8000/plantcenter'
-url = URL_BASE + '/plantstatus'
+# http://localhost:8002/api/plantcenter/plantstatus
+URL_BASE = 'http://localhost:8002/api'
+url = URL_BASE + '/plantcenter/plantstatus'
 data = {
     "device": 746,
     # "date":["2022-10-01","2022-10-29"],
@@ -19,7 +20,7 @@ st=time()
 response = requests.post(url, data=json.dumps(data))
 print(response)
 print(response.json())
-print('time : ',time()-st)
+# print('time : ',time()-st)
 # print(response.json())
 
 

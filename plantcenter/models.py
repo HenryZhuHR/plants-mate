@@ -45,3 +45,5 @@ class PlantStatus(models.Model):
     light = models.FloatField(verbose_name='光线',null=True)
     temperature = models.FloatField(verbose_name='温度',null=True)
     humidity = models.FloatField(verbose_name='湿度',null=True)
+
+

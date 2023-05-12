@@ -1,1 +1,1 @@
-from .plantstatus import get_plantstatus
+from .plantstatus import plantstatus

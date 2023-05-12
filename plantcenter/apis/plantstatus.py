@@ -1,5 +1,6 @@
 import os
 import datetime
+import sys
 import yaml
 import json
 import logging
@@ -13,30 +14,31 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render
 
+sys.path.append(settings.BASE_DIR)
+from utils.error.error_code import ErrorResponse, ReturnHttpResponse
+
 from ..models import PlantStatus
-from .error_code import ErrorResponse
+
 from .date_time_utils import CHECK_DATETIME
+
+from django.views.decorators.csrf import csrf_exempt
+
+
+
 
 logger = logging.getLogger('console')
 
 
-def get_plantstatus(request: WSGIRequest):
+@csrf_exempt
+def plantstatus(request: WSGIRequest):
     if request.method == 'POST':
+        # =============================================
+        #   Check data (json)
+        # =============================================
         try:
             request_json_data = json.loads(request.body)
-            print(request_json_data)
         except:
-            return HttpResponse(
-                json.dumps(
-                    {
-                        "Error": {
-                            "Code": ErrorResponse.NoJsonContentType_Code,
-                            "Message": ErrorResponse.NoJsonContentType_Mesg,
-                        }
-                    }
-                ),
-                content_type="application/json"
-            )
+            return ErrorResponse.Data.ErrorType(type(request.body))
 
         # =============================================
         #   Check Parameter
@@ -110,7 +112,7 @@ def get_plantstatus(request: WSGIRequest):
                 "humidity": status.humidity,
             }
             # print(status.id,status.date,status.time,status.light,status.temperature,status.humidity)
-            data_list.append(data_json)    # sda
+            data_list.append(data_json)                  # sda
         return HttpResponse(
             json.dumps({'Response': {
                 "device": request_json_data['device'],
@@ -118,6 +120,5 @@ def get_plantstatus(request: WSGIRequest):
             }}),
             content_type="application/json"
         )
-
     else:
         return HttpResponse('It is not a POST request!!!')# yapf:disable

@@ -5,5 +5,5 @@ from . import apis
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('plantstatus', apis.get_plantstatus, name='plantstatus'),
+    path('plantstatus', apis.plantstatus, name='plantstatus'),
 ]

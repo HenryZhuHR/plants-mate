@@ -3,11 +3,11 @@ import json
 from django.http import HttpResponse
 
 
-def ReturnHttpResponse(Code: int, Message: str):
-    return HttpResponse(json.dumps({"Error": {
-        "Code": Code,
-        "Message": Message,
-    }}), content_type="application/json")
+def ReturnHttpResponse(code: int, message: str):
+    return HttpResponse(json.dumps({
+        "code": code,
+        "message": message,
+    }), content_type="application/json")
 
 
 class ErrorResponse:
@@ -15,19 +15,25 @@ class ErrorResponse:
         Custom Error Response encapsulated from `django.http.HttpResponse`
         ---
     """
-    # request 1__
-    RequestMethod_Code = 110
-    RequestMethod_Mesg = "This request must send a json like data. Please check your data"
 
-    NoJsonContentType_Code = 110
-    NoJsonContentType_Mesg = "This request must send a json like data. Please check your data"
-
+    class Request:
+        @staticmethod
+        def ErrorMethod(method: str = ""):
+            return ReturnHttpResponse(101, "Error Request method: " + method)
+    
+    class Data:
+        @staticmethod
+        def ErrorType(type: str = ""):
+            return ReturnHttpResponse(110, "Error Data type: " + type)
+    
     class Parameter:
         @staticmethod
         def Missing(param: str = ""):
             return ReturnHttpResponse(120, "Missing Parameter. " + f"Please check parameter <{param}> if in your data")
+        @staticmethod
         def Error(Message: str = ""):
             return ReturnHttpResponse(121, "Error Parameter. " + Message)
+        @staticmethod
         def Invalid(Message: str = ""):
             return ReturnHttpResponse(122, "Invalid Parameter. " + Message)
 

@@ -11,3 +11,5 @@ python manage.py collectstatic
 python3 manage.py createsuperuser \
     --username "henryzhu" \
     --email "296506195@qq.com"
+
+# henryzhu296506
